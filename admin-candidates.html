@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Data Kandidat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Copy semua CSS dari admin-voters.html */
+        
+        /* ... (CSS sama seperti di atas) ... */
+          * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .admin-dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .admin-sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #2c3e50 0%, #1a2530 100%);
+            color: white;
+            padding: 30px 20px;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-profile {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .admin-profile h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .admin-role {
+            color: #bdc3c7;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .admin-username {
+            color: #95a5a6;
+            font-size: 14px;
+        }
+
+        .admin-menu ul {
+            list-style: none;
+        }
+
+        .admin-menu li {
+            margin-bottom: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .admin-menu li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .admin-menu li.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-left: 4px solid #667eea;
+        }
+
+        .admin-menu a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .admin-menu i {
+            width: 25px;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        .admin-main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+
+        .page-header h1 i {
+            margin-right: 15px;
+            color: #667eea;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-primary, .btn-secondary, .btn-danger {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #dee2e6;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .btn-primary i, .btn-secondary i, .btn-danger i {
+            margin-right: 8px;
+        }
+
+        /* Search and Filter Section */
+        .search-filter-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .search-filter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 20px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .form-control {
+            padding: 12px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .btn-filter {
+            padding: 12px 25px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Voters Table */
+        .voters-table-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .voters-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        .voters-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .voters-table th {
+            padding: 20px 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .voters-table tbody tr {
+            border-bottom: 1px solid #eaeaea;
+            transition: all 0.3s ease;
+        }
+
+        .voters-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .voters-table td {
+            padding: 18px 15px;
+            color: #495057;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-voted {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .btn-edit {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #dee2e6;
+        }
+
+        .btn-edit:hover {
+            background: #e9ecef;
+        }
+
+        .btn-delete {
+            background: #fff5f5;
+            color: #e74c3c;
+            border: 1px solid #fdd8d8;
+        }
+
+        .btn-delete:hover {
+            background: #fdd8d8;
+        }
+
+        .btn-action i {
+            margin-right: 5px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .page-item {
+            list-style: none;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            color: #495057;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .page-link:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+        }
+
+        .page-item.active .page-link {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        /* Summary Cards */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 30px;
+            color: white;
+        }
+
+        .card-icon.total {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-icon.voted {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+        }
+
+        .card-icon.not-voted {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .card-content h3 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .card-content p {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-title i {
+            margin-right: 10px;
+            color: #667eea;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #95a5a6;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #e74c3c;
+        }
+
+        /* Footer */
+        .admin-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .admin-dashboard-container {
+                flex-direction: column;
+                margin: 10px;
+            }
+            
+            .admin-sidebar {
+                width: 100%;
+                padding: 20px;
+            }
+            
+            .admin-menu ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .admin-menu li {
+                flex: 1;
+                min-width: 150px;
+            }
+            
+            .search-filter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-main-content {
+                padding: 20px;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+        /* Additional Candidate Specific Styles */
+        .candidate-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #667eea;
+        }
+        
+        .photo-upload {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .photo-upload i {
+            font-size: 40px;
+            color: #95a5a6;
+        }
+        
+        .photo-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        
+        .candidate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .candidate-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .candidate-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .candidate-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .candidate-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: white;
+            color: #667eea;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .candidate-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 5px solid white;
+            margin: 0 auto 15px;
+            overflow: hidden;
+        }
+        
+        .candidate-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .candidate-body {
+            padding: 25px;
+        }
+        
+        .candidate-name {
+            font-size: 22px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .candidate-position {
+            color: #667eea;
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .candidate-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #7f8c8d;
+        }
+        
+        .candidate-info i {
+            width: 20px;
+            margin-right: 10px;
+            color: #667eea;
+        }
+        
+        .candidate-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eaeaea;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #95a5a6;
+            text-transform: uppercase;
+        }
+        
+        .candidate-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        /* Modal khusus kandidat */
+        .candidate-modal .modal-content {
+            max-width: 600px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        .visi-misi-section {
+            margin-top: 20px;
+        }
+        
+        .visi-misi-section h4 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+        
+        .visi-misi-section h4 i {
+            margin-right: 10px;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-dashboard-container">
+        <!-- Sidebar -->
+        <div class="admin-sidebar">
+            <div class="admin-profile">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3 id="adminName">Admin Sistem</h3>
+                <p class="admin-role" id="adminRole">Administrator</p>
+                <p class="admin-username" id="adminUsername">@admin</p>
+            </div>
+            
+            <nav class="admin-menu">
+                <ul>
+                    <li>
+                        <a href="admin-dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-voters.html">
+                            <i class="fas fa-users"></i>
+                            <span>Data Pemilih</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="admin-candidates.html">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Kandidat</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-statistics.html">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Statistik</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-logs.html">
+                            <i class="fas fa-history"></i>
+                            <span>Log Aktivitas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-settings.html">
+                            <i class="fas fa-cog"></i>
+                            <span>Pengaturan</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="admin-main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1><i class="fas fa-user-tie"></i> Data Kandidat</h1>
+                <div class="header-actions">
+                    <button class="btn-secondary" onclick="exportCandidates()">
+                        <i class="fas fa-download"></i> Ekspor
+                    </button>
+                    <button class="btn-primary" onclick="openAddCandidateModal()">
+                        <i class="fas fa-plus"></i> Tambah Kandidat
+                    </button>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="summary-card">
+                    <div class="card-icon total">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="totalCandidates">8</h3>
+                        <p>Total Kandidat</p>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon voted">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="leadingCandidate">Kandidat A</h3>
+                        <p>Peringkat 1</p>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon not-voted">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="totalVotes">1,250</h3>
+                        <p>Total Suara</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="search-filter-section">
+                <div class="search-filter-grid">
+                    <div class="form-group">
+                        <label for="searchCandidate"><i class="fas fa-search"></i> Cari Kandidat</label>
+                        <input type="text" id="searchCandidate" class="form-control" placeholder="Nama atau nomor urut...">
+                    </div>
+                    <div class="form-group">
+                        <label for="positionFilter"><i class="fas fa-filter"></i> Posisi</label>
+                        <select id="positionFilter" class="form-control">
+                            <option value="">Semua Posisi</option>
+                            <option value="presiden">Presiden</option>
+                            <option value="wakil">Wakil Presiden</option>
+                            <option value="gubernur">Gubernur</option>
+                            <option value="bupati">Bupati</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sortBy"><i class="fas fa-sort"></i> Urutkan</label>
+                        <select id="sortBy" class="form-control">
+                            <option value="number">Nomor Urut</option>
+                            <option value="name">Nama</option>
+                            <option value="votes">Jumlah Suara</option>
+                        </select>
+                    </div>
+                    <button class="btn-filter" onclick="filterCandidates()">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
+                </div>
+            </div>
+
+            <!-- Candidates Grid -->
+            <div class="candidate-grid" id="candidatesGrid">
+                <!-- Data kandidat akan diisi oleh JavaScript -->
+            </div>
+
+            <!-- Footer -->
+            <div class="admin-footer">
+                <p>&copy; 2024 Sistem Pemilihan Online. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tambah/Edit Kandidat -->
+    <div id="candidateModal" class="modal candidate-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="candidateModalTitle"><i class="fas fa-user-plus"></i> Tambah Kandidat Baru</h3>
+                <button class="close-modal" onclick="closeCandidateModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="candidateForm">
+                    <!-- Photo Upload -->
+                    <div class="photo-upload" onclick="document.getElementById('candidatePhoto').click()">
+                        <i class="fas fa-camera"></i>
+                        <img id="photoPreview" class="photo-preview" alt="Preview">
+                    </div>
+                    <input type="file" id="candidatePhoto" accept="image/*" style="display: none" onchange="previewPhoto(event)">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="candidateNumber">Nomor Urut</label>
+                            <input type="number" id="candidateNumber" class="form-control" required min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="candidatePosition">Posisi</label>
+                            <select id="candidatePosition" class="form-control" required>
+                                <option value="">Pilih Posisi</option>
+                                <option value="presiden">Presiden</option>
+                                <option value="wakil">Wakil Presiden</option>
+                                <option value="gubernur">Gubernur</option>
+                                <option value="bupati">Bupati</option>
+                                <option value="wali_kota">Wali Kota</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="candidateName">Nama Lengkap</label>
+                            <input type="text" id="candidateName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="candidateNickname">Nama Panggilan</label>
+                            <input type="text" id="candidateNickname" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="candidateParty">Partai/Organisasi</label>
+                        <input type="text" id="candidateParty" class="form-control">
+                    </div>
+                    
+                    <div class="visi-misi-section">
+                        <h4><i class="fas fa-bullseye"></i> Visi & Misi</h4>
+                        <div class="form-group">
+                            <label for="candidateVision">Visi</label>
+                            <textarea id="candidateVision" class="form-control" rows="3" placeholder="Masukkan visi kandidat..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="candidateMission">Misi</label>
+                            <textarea id="candidateMission" class="form-control" rows="4" placeholder="Masukkan misi kandidat..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="candidateAge">Usia</label>
+                            <input type="number" id="candidateAge" class="form-control" min="25" max="70">
+                        </div>
+                        <div class="form-group">
+                            <label for="candidateEducation">Pendidikan</label>
+                            <select id="candidateEducation" class="form-control">
+                                <option value="">Pilih Pendidikan</option>
+                                <option value="sma">SMA/Sederajat</option>
+                                <option value="d3">D3</option>
+                                <option value="s1">S1</option>
+                                <option value="s2">S2</option>
+                                <option value="s3">S3</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="closeCandidateModal()">Batal</button>
+                        <button type="submit" class="btn-primary">Simpan Kandidat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data contoh untuk kandidat
+        const sampleCandidates = [
+            {
+                id: 1,
+                number: 1,
+                name: "Ahmad Surya",
+                nickname: "Ahmad",
+                position: "Presiden",
+                party: "Partai Kebangkitan Nasional",
+                photo: "https://via.placeholder.com/100",
+                votes: 450,
+                vision: "Mewujudkan Indonesia yang maju, mandiri, dan berdaya saing",
+                mission: "1. Meningkatkan kualitas pendidikan\n2. Memperkuat ekonomi kerakyatan\n3. Membangun infrastruktur merata",
+                age: 45,
+                education: "s2",
+                status: "active"
+            },
+            {
+                id: 2,
+                number: 2,
+                name: "Budi Santoso",
+                nickname: "Budi",
+                position: "Wakil Presiden",
+                party: "Partai Persatuan Bangsa",
+                photo: "https://via.placeholder.com/100",
+                votes: 380,
+                vision: "Indonesia sejahtera dan berkeadilan",
+                mission: "1. Pengentasan kemiskinan\n2. Peningkatan kesehatan masyarakat\n3. Perlindungan lingkungan",
+                age: 50,
+                education: "s3",
+                status: "active"
+            },
+            // Tambahkan data lainnya sesuai kebutuhan
+        ];
+
+        // Fungsi untuk menampilkan kandidat dalam grid
+        function renderCandidatesGrid(candidates = sampleCandidates) {
+            const grid = document.getElementById('candidatesGrid');
+            grid.innerHTML = '';
+            
+            candidates.forEach(candidate => {
+                const card = document.createElement('div');
+                card.className = 'candidate-card';
+                card.innerHTML = `
+                    <div class="candidate-header">
+                        <div class="candidate-number">${candidate.number}</div>
+                        <div class="candidate-avatar">
+                            <img src="${candidate.photo}" alt="${candidate.name}">
+                        </div>
+                        <h3 class="candidate-name">${candidate.name}</h3>
+                        <p class="candidate-position">${candidate.position}</p>
+                    </div>
+                    <div class="candidate-body">
+                        <div class="candidate-info">
+                            <i class="fas fa-landmark"></i>
+                            <span>${candidate.party}</span>
+                        </div>
+                        <div class="candidate-info">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>${getEducationText(candidate.education)}</span>
+                        </div>
+                        <div class="candidate-info">
+                            <i class="fas fa-birthday-cake"></i>
+                            <span>${candidate.age} tahun</span>
+                        </div>
+                        
+                        <div class="candidate-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">${candidate.votes}</div>
+                                <div class="stat-label">Suara</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${calculatePercentage(candidate.votes, 1250)}%</div>
+                                <div class="stat-label">Persentase</div>
+                            </div>
+                        </div>
+                        
+                        <div class="candidate-actions">
+                            <button class="btn-action btn-edit" onclick="editCandidate(${candidate.id})">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn-action btn-delete" onclick="deleteCandidate(${candidate.id})">
+                                <i class="fas fa-trash"></i> Hapus
+                            </button>
+                            <button class="btn-action btn-primary" onclick="viewCandidate(${candidate.id})" style="flex: 1;">
+                                <i class="fas fa-eye"></i> Detail
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Helper functions
+        function getEducationText(code) {
+            const educationMap = {
+                'sma': 'SMA/Sederajat',
+                'd3': 'D3',
+                's1': 'S1',
+                's2': 'S2',
+                's3': 'S3'
+            };
+            return educationMap[code] || 'Tidak diketahui';
+        }
+
+        function calculatePercentage(value, total) {
+            return total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+        }
+
+        // Modal functions
+        function openAddCandidateModal() {
+            document.getElementById('candidateModalTitle').innerHTML = '<i class="fas fa-user-plus"></i> Tambah Kandidat Baru';
+            document.getElementById('candidateForm').reset();
+            document.getElementById('photoPreview').style.display = 'none';
+            document.getElementById('candidateModal').style.display = 'flex';
+        }
+
+        function closeCandidateModal() {
+            document.getElementById('candidateModal').style.display = 'none';
+        }
+
+        function previewPhoto(event) {
+            const input = event.target;
+            const preview = document.getElementById('photoPreview');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    preview.parentElement.querySelector('i').style.display = 'none';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function editCandidate(id) {
+            const candidate = sampleCandidates.find(c => c.id === id);
+            if (candidate) {
+                document.getElementById('candidateModalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Data Kandidat';
+                document.getElementById('candidateNumber').value = candidate.number;
+                document.getElementById('candidatePosition').value = candidate.position;
+                document.getElementById('candidateName').value = candidate.name;
+                document.getElementById('candidateNickname').value = candidate.nickname;
+                document.getElementById('candidateParty').value = candidate.party;
+                document.getElementById('candidateVision').value = candidate.vision;
+                document.getElementById('candidateMission').value = candidate.mission;
+                document.getElementById('candidateAge').value = candidate.age;
+                document.getElementById('candidateEducation').value = candidate.education;
+                
+                // Set photo preview
+                const preview = document.getElementById('photoPreview');
+                if (candidate.photo && candidate.photo !== '') {
+                    preview.src = candidate.photo;
+                    preview.style.display = 'block';
+                    preview.parentElement.querySelector('i').style.display = 'none';
+                }
+                
+                document.getElementById('candidateModal').style.display = 'flex';
+            }
+        }
+
+        function deleteCandidate(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus kandidat ini?')) {
+                alert(`Kandidat dengan ID ${id} akan dihapus`);
+                // Di sini Anda akan mengimplementasikan logika penghapusan
+                renderCandidatesGrid(); // Refresh grid
+            }
+        }
+
+        function viewCandidate(id) {
+            const candidate = sampleCandidates.find(c => c.id === id);
+            if (candidate) {
+                // Bisa diarahkan ke halaman detail kandidat
+                alert(`Lihat detail kandidat: ${candidate.name}`);
+            }
+        }
+
+        function filterCandidates() {
+            const searchTerm = document.getElementById('searchCandidate').value.toLowerCase();
+            const positionFilter = document.getElementById('positionFilter').value;
+            const sortBy = document.getElementById('sortBy').value;
+            
+            // Filter logika bisa ditambahkan di sini
+            renderCandidatesGrid();
+        }
+
+        function exportCandidates() {
+            alert('Fitur ekspor data kandidat akan diimplementasikan');
+            // Implementasi ekspor data
+        }
+
+        // Event listener untuk form submission
+        document.getElementById('candidateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Simpan data kandidat
+            alert('Data kandidat berhasil disimpan!');
+            closeCandidateModal();
+            renderCandidatesGrid();
+        });
+
+        // Inisialisasi saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCandidatesGrid();
+            
+            // Update summary counts
+            document.getElementById('totalCandidates').textContent = sampleCandidates.length;
+            
+            // Cari kandidat dengan suara terbanyak
+            const leadingCandidate = sampleCandidates.reduce((prev, current) => 
+                (prev.votes > current.votes) ? prev : current
+            );
+            document.getElementById('leadingCandidate').textContent = leadingCandidate.nickname;
+            
+            const totalVotes = sampleCandidates.reduce((sum, candidate) => sum + candidate.votes, 0);
+            document.getElementById('totalVotes').textContent = totalVotes.toLocaleString();
+            
+            // Close modal ketika klik di luar
+            window.onclick = function(event) {
+                const modal = document.getElementById('candidateModal');
+                if (event.target === modal) {
+                    closeCandidateModal();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

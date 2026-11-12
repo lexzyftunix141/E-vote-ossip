@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/ossip-bg.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-login-page">
+    <div class="admin-login-container">
+        <div class="admin-login-header">
+            <div class="admin-logo">
+                <div class="logo-circle">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h1>PANITIA PEMILU OSSIP</h1>
+                <p>Dashboard Admin - Sistem Pemilihan 2027-2028</p>
+            </div>
+        </div>
+        
+        <div class="admin-login-card">
+            <div class="admin-login-form">
+                <h2><i class="fas fa-lock"></i> Admin Login</h2>
+                <p class="admin-subtitle">Akses terbatas untuk panitia pemilu dan pengawas</p>
+                
+                <!-- Login Status Message -->
+                <div class="login-message" id="loginMessage"></div>
+                
+                <!-- Login Attempts Warning -->
+                <div class="login-attempts-warning" id="loginAttemptsWarning" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="attemptsText">Percobaan login tersisa: <span id="attemptsCount">3</span></span>
+                </div>
+                
+                <form id="adminLoginForm">
+                    <div class="form-group">
+                        <label for="adminUsername"><i class="fas fa-user-tie"></i> Username Admin</label>
+                        <input type="text" id="adminUsername" name="adminUsername" placeholder="contoh: admin atau panitia" required>
+                        <small class="form-help">Username default: admin / panitia</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="adminPassword"><i class="fas fa-key"></i> Password</label>
+                        <div class="password-container">
+                            <input type="password" id="adminPassword" name="adminPassword" placeholder="Masukkan password" required>
+                            <button type="button" class="toggle-password" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <small class="form-help">Password default: -</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="adminCode"><i class="fas fa-shield-alt"></i> Kode Keamanan Admin</label>
+                        <div class="security-code-container">
+                            <input type="password" id="adminCode" name="adminCode" placeholder="Masukkan kode keamanan" required>
+                            <button type="button" class="btn-security-hint" id="securityHintBtn" title="Petunjuk kode">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
+                        </div>
+                        <small class="form-help">Kode: -</small>
+                        <div class="security-info" id="securityInfo" style="display: none;">
+                            <p><strong>Kode Keamanan Sistem:</strong> <span id="systemSecurityHint">-</span></p>
+                            <p class="hint-note"><i class="fas fa-exclamation-triangle"></i> Rahasiakan kode ini!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-admin-login" id="loginButton">
+                            <i class="fas fa-sign-in-alt"></i> LOGIN SEBAGAI ADMIN
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="admin-login-info">
+                    <div class="info-box">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h4>PERHATIAN!</h4>
+                        <p>Akses ini hanya untuk panitia pemilu yang berwenang. Setiap aktivitas akan tercatat dalam log sistem.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="admin-login-sidebar">
+                <h3><i class="fas fa-tasks"></i> Fungsi Admin</h3>
+                <ul class="admin-functions">
+                    <li><i class="fas fa-chart-bar"></i> Monitoring hasil pemilihan real-time</li>
+                    <li><i class="fas fa-users-cog"></i> Manajemen data pemilih</li>
+                    <li><i class="fas fa-user-check"></i> Verifikasi status pemilih</li>
+                    <li><i class="fas fa-file-export"></i> Ekspor data hasil pemilihan</li>
+                    <li><i class="fas fa-history"></i> Log aktivitas pemilih</li>
+                </ul>
+                
+                <div class="admin-contact">
+                    <h4><i class="fas fa-headset"></i> Bantuan Admin</h4>
+                    <p>Jika mengalami masalah login, hubungi:</p>
+                    <p><i class="fas fa-user"></i> Ketua Panitia Pemilu</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="admin-login-footer">
+            <a href="index.html"><i class="fas fa-arrow-left"></i> Kembali ke Halaman Utama</a>
+            <p>© 2026 Pemilu OSSIP | INSAN PRATAMA. Semua Hak Dilindungi. &copy; Dikembangkan oleh Tim IT OSSIP.</p>
+        </div>
+    </div>
+
+    <!-- Security Modal -->
+    <div class="modal-overlay" id="securityModal" style="display: none;">
+        <div class="modal-content security-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-shield"></i> Sistem Keamanan Admin</h2>
+                <button class="modal-close" id="closeSecurityModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="security-level">
+                    <div class="security-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Tingkat Keamanan: TINGGI</h3>
+                    <p>Sistem ini dilindungi oleh kode keamanan bertingkat</p>
+                </div>
+                
+                <div class="security-instructions">
+                    <h4><i class="fas fa-info-circle"></i> Instruksi Kode Keamanan:</h4>
+                    <ol>
+                        <li>Kode keamanan hanya diberikan kepada panitia terpercaya</li>
+                        <li>Kode terdiri dari kombinasi huruf dan angka</li>
+                        <li>Kode bersifat <strong>case-sensitive</strong> (perhatikan huruf besar/kecil)</li>
+                        <li>Jangan bagikan kode kepada siapapun</li>
+                        <li>Setelah login, semua aktivitas akan tercatat</li>
+                    </ol>
+                </div>
+                
+                <div class="security-contact">
+                    <h4><i class="fas fa-headset"></i> Lupa Kode?</h4>
+                    <p>Hubungi Ketua Panitia Terdekat</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-confirm" id="understandBtn">
+                    <i class="fas fa-check"></i> MENGERTI
+                </button>
+            </div>
+        </div>
+    </div>
+
+        <!-- Load Supabase & Database -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="database.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Admin Login Page Loaded');
+            
+            let loginAttempts = 3;
+            let isLocked = false;
+            
+            // DOM Elements
+            const loginForm = document.getElementById('adminLoginForm');
+            const adminUsername = document.getElementById('adminUsername');
+            const adminPassword = document.getElementById('adminPassword');
+            const adminCode = document.getElementById('adminCode');
+            const togglePassword = document.getElementById('togglePassword');
+            const securityHintBtn = document.getElementById('securityHintBtn');
+            const securityInfo = document.getElementById('securityInfo');
+            const loginButton = document.getElementById('loginButton');
+            const loginMessage = document.getElementById('loginMessage');
+            const loginAttemptsWarning = document.getElementById('loginAttemptsWarning');
+            const attemptsCount = document.getElementById('attemptsCount');
+            const attemptsText = document.getElementById('attemptsText');
+            
+            // Toggle password visibility
+            togglePassword.addEventListener('click', function() {
+                const type = adminPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                adminPassword.setAttribute('type', type);
+                this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+            });
+            
+            // Show/hide security hint
+            securityHintBtn.addEventListener('click', function() {
+                securityInfo.style.display = securityInfo.style.display === 'none' ? 'block' : 'none';
+            });
+            
+            // Show login attempts warning
+            function showLoginAttemptsWarning() {
+                loginAttemptsWarning.style.display = 'flex';
+                attemptsCount.textContent = loginAttempts;
+                
+                if (loginAttempts <= 1) {
+                    attemptsText.innerHTML = '<strong>Percobaan terakhir!</strong>';
+                    loginAttemptsWarning.style.background = 'linear-gradient(135deg, #ff4444, #cc0000)';
+                } else if (loginAttempts <= 2) {
+                    loginAttemptsWarning.style.background = 'linear-gradient(135deg, #ff9800, #f57c00)';
+                }
+            }
+            
+            // Show message
+            function showMessage(message, type = 'error') {
+                loginMessage.textContent = message;
+                loginMessage.className = `login-message ${type}`;
+                loginMessage.style.display = 'block';
+                if (type === 'success') {
+                    setTimeout(() => { loginMessage.style.display = 'none'; }, 5000);
+                }
+            }
+            
+            // Disable form
+            function disableLoginForm() {
+                adminUsername.disabled = true;
+                adminPassword.disabled = true;
+                adminCode.disabled = true;
+                loginButton.disabled = true;
+                loginButton.innerHTML = '<i class="fas fa-lock"></i> AKUN TERKUNCI';
+                loginButton.style.background = 'linear-gradient(135deg, #666, #444)';
+                loginButton.style.cursor = 'not-allowed';
+                showMessage('Login dinonaktifkan. Hubungi administrator.', 'error');
+                isLocked = true;
+            }
+            
+            // Handle Login Submit
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                if (isLocked) {
+                    showMessage('Login dinonaktifkan. Hubungi administrator.', 'error');
+                    return;
+                }
+                
+                const username = adminUsername.value.trim();
+                const password = adminPassword.value.trim();
+                const securityCode = adminCode.value.trim();
+            
+                // Jika ingin menggunakan OSIS2027PANITIA, ganti 'OSSIP2026' di bawah ini
+                const validSecurityCode = 'OSSIP2026'; 
+                if (securityCode !== validSecurityCode) {
+                    showMessage('Kode keamanan salah!', 'error');
+                    loginAttempts--;
+                    if (loginAttempts > 0) {
+                        showLoginAttemptsWarning();
+                        showMessage(`Kode keamanan salah. Percobaan tersisa: ${loginAttempts}`, 'error');
+                    } else {
+                        disableLoginForm();
+                    }
+                    return;
+                }
+                
+                loginButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MEMPROSES...';
+                loginButton.disabled = true;
+                
+                try {
+                    // Panggil fungsi Supabase
+                    const result = await window.db.validateAdminLogin(username, password);
+                    
+                    if (result && result.success) {
+                        showMessage('Login berhasil! Mengarahkan ke dashboard...', 'success');
+                        
+                        // Simpan Session (WAJIB agar dashboard tidak menendang Anda)
+                        sessionStorage.setItem('adminLoggedIn', 'true');
+                        sessionStorage.setItem('adminUsername', result.admin.username);
+                        sessionStorage.setItem('adminName', result.admin.name);
+                        sessionStorage.setItem('adminRole', result.admin.role);
+                        sessionStorage.setItem('adminLoginTime', new Date().toISOString());
+                        
+                        loginAttempts = 3;
+                        loginAttemptsWarning.style.display = 'none';
+                        
+                        setTimeout(() => {
+                            window.location.href = 'admin-dashboard.html';
+                        }, 1500);
+                        
+                    } else {
+                        const errMsg = result && result.message ? result.message : 'Login gagal. Cek username/password.';
+                        showMessage(errMsg, 'error');
+                        loginAttempts--;
+                        
+                        if (loginAttempts > 0) {
+                            showLoginAttemptsWarning();
+                        } else {
+                            disableLoginForm();
+                        }
+                        
+                        loginButton.innerHTML = '<i class="fas fa-sign-in-alt"></i> LOGIN SEBAGAI ADMIN';
+                        loginButton.disabled = false;
+                    }
+                    
+                } catch (error) {
+                    console.error('Login error:', error);
+                    showMessage('Terjadi kesalahan sistem. Silakan coba lagi.', 'error');
+                    loginButton.innerHTML = '<i class="fas fa-sign-in-alt"></i> LOGIN SEBAGAI ADMIN';
+                    loginButton.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

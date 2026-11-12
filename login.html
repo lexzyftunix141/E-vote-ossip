@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login Siswa</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/ossip-bg.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-header">
+            <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+            <div class="login-logo">
+                <img class="logo-vote"src="assets/logo-ossip.png" alt="Logo Sekolah">
+                <h1>LOGIN PAGE</h1>
+                <p>Pemilu OSSIP 2027-2028</p>
+            </div>
+        </div>
+        
+        <div class="login-card">
+            <div class="login-illustration">
+                <div class="illustration-container">
+                    <i class="fas fa-user-circle"></i>
+                    <h3>Masuk dengan Username</h3>
+                    <p>Gunakan username yang telah diberikan untuk mengakses sistem pemilihan</p>
+                </div>
+            </div>
+            
+            <div class="login-form">
+                <h2>Masuk ke Sistem</h2>
+                <p class="form-subtitle">Silakan masukkan username Anda untuk mulai memilih</p>
+                
+                                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username"><i class="fas fa-user"></i> Username</label>
+                        <input type="text" id="username" name="username" placeholder="Masukkan username Anda" required>
+                        <small class="form-help">Contoh: siswa/siswi001</small>
+                    </div>
+                    
+                    <!-- INPUT TOKEN -->
+                    <div class="form-group">
+                        <label for="token"><i class="fas fa-key"></i> Token Rahasia</label>
+                        <input type="text" id="token" name="token" placeholder="Masukkan token dari panitia" required>
+                        <small class="form-help">Token diberikan oleh panitia pemilu.</small>
+                    </div>
+                    <!-- END INPUT TOKEN -->
+
+                    <div class="form-group">
+                        <label for="captcha"><i class="fas fa-shield-alt"></i> Kode Keamanan</label>
+                        <div class="captcha-container">
+                            <div class="captcha-code" id="captchaText">A1B2C3</div>
+                            <button type="button" class="captcha-refresh" id="refreshCaptcha">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                        </div>
+                        <input type="text" id="captcha" name="captcha" placeholder="Masukkan kode di atas" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-login-submit">
+                            <i class="fas fa-sign-in-alt"></i> MASUK
+                        </button>
+                        <div class="login-info">
+                            <p><i class="fas fa-info-circle"></i> Jika lupa username, hubungi panitia pemilu.</p>
+                            <p><i class="fas fa-exclamation-triangle"></i> Setiap username hanya dapat digunakan satu kali.</p>
+                        </div>
+                    </div>
+                </form>
+                
+                <div class="login-footer">
+                    <p>Kembali ke <a href="index.html">Halaman Utama</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-messages">
+            <div class="message-box">
+                <i class="fas fa-vote-yea"></i>
+                <h3>Penting!</h3>
+                <p>Pastikan Anda memilih dengan bijak. Suara Anda menentukan masa depan OSSIP periode 2027-2028.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tambahkan ini sebelum script.js -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="database.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

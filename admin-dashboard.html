@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/ossip-bg.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS untuk debugging */
+        .debug-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 9999;
+        }
+        .error-box {
+            background: #ff4444;
+            color: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+                /* Footer */
+        .admin-footer {
+            padding-top: 25px;
+            border-top: 1px solid #eaeaea;
+            text-align: center;
+            color: #546e7a;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="admin-dashboard-page">
+    
+
+    <div class="admin-dashboard-container">
+        <!-- Sidebar -->
+        <div class="admin-sidebar">
+            <div class="admin-profile">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h3 id="adminName">Memuat...</h3>
+                <p class="admin-role" id="adminRole">Memuat...</p>
+                <p class="admin-username" id="adminUsername">@memuat</p>
+            </div>
+            
+            <nav class="admin-menu">
+                <ul>
+                    <li class="active">
+                        <a href="#">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admin-voters.html">
+                            <i class="fas fa-users"></i>
+                            <span>Data Voters</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="logout-section">
+                <button class="btn-logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+                <p class="login-time" id="loginTime">Login: -</p>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="admin-main-content">
+            <!-- Header -->
+            <div class="admin-header">
+                <div class="header-left">
+                    <h1>Admin Dashboard</h1>
+                    <p>Panel Kontrol Sistem Pemilihan OSSIP 2027-2028</p>
+                </div>
+                <div class="header-right">
+                    <div class="notification-bell">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count">0</span>
+                    </div>
+                    <div class="system-status">
+                        <i class="fas fa-circle system-online"></i>
+                        <span>Sistem Online</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Content Area -->
+            <div class="dashboard-content" id="dashboardContent">
+                <div class="loading-spinner" id="loadingSpinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <button class="btn-retry" onclick="retryLoad()" style="margin-top: 20px;">
+                        <i class="fas fa-redo"></i> Coba Lagi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple Logout Modal -->
+    <div class="modal-overlay" id="logoutModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-sign-out-alt"></i> Konfirmasi Logout</h2>
+            </div>
+            <div class="modal-body">
+                <p>Apakah Anda yakin ingin logout?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="document.getElementById('logoutModal').style.display='none'">Batal</button>
+                <button class="btn-confirm" onclick="doLogout()">Ya, Logout</button>
+            </div>
+        </div>
+    </div>
+
+            <div class="admin-footer">
+                <p>&copy; 2026 Organisasi Siswa Santri Insan Pratama(OSSIP). Hak Cipta Dilindungi.</p>
+                <p><i class="fas fa-mosque"></i> Pondok Pesantren Darussalam</p>
+            </div>
+
+    <!-- Main Script -->
+    
+        <!-- Load Supabase CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <!-- Load Database -->
+        <script src="database.js"></script>
+
+        <script>
+        // ============================================
+        // DASHBOARD SCRIPT - SUPABASE VERSION
+        // ============================================
+
+        console.log('=== ADMIN DASHBOARD SCRIPT START ===');
+
+        // Pastikan admin sudah login
+        function checkAdminSession() {
+            const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
+            const adminUsername = sessionStorage.getItem('adminUsername');
+            
+            if (!isLoggedIn || !adminUsername) {
+                alert('⚠️ Anda harus login sebagai admin terlebih dahulu!');
+                window.location.href = 'admin-login.html';
+                return false;
+            }
+            return true;
+        }
+
+        // Set info admin di sidebar
+        function setAdminInfo() {
+            const adminName = sessionStorage.getItem('adminName') || 'Admin';
+            const adminRole = sessionStorage.getItem('adminRole') || 'Administrator';
+            const adminUsername = sessionStorage.getItem('adminUsername') || 'admin';
+            
+            if (document.getElementById('adminName')) {
+                document.getElementById('adminName').textContent = adminName;
+                document.getElementById('adminRole').textContent = adminRole;
+                document.getElementById('adminUsername').textContent = '@' + adminUsername;
+            }
+            
+            const loginTime = sessionStorage.getItem('adminLoginTime');
+            if (loginTime && document.getElementById('loginTime')) {
+                document.getElementById('loginTime').textContent = `Login: ${new Date(loginTime).toLocaleTimeString()}`;
+            }
+        }
+
+        // Render Dashboard
+        function renderDashboard(stats) {
+            console.log('Rendering dashboard with:', stats);
+            
+            const content = `
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #3949ab, #5c6bc0);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Pemilih</h3>
+                            <p class="stat-number">${stats.totalVoters || 0}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4CAF50, #2E7D32);">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Sudah Memilih</h3>
+                            <p class="stat-number">${stats.votedVoters || 0}</p>
+                            <p class="stat-percentage">${stats.votePercentage || 0}%</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #FF9800, #F57C00);">
+                            <i class="fas fa-user-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Belum Memilih</h3>
+                            <p class="stat-number">${stats.notVotedVoters || 0}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #9C27B0, #7B1FA2);">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Kandidat</h3>
+                            <p class="stat-number">${stats.totalCandidates || 0}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="candidates-section">
+                    <h2><i class="fas fa-trophy"></i> Hasil Sementara</h2>
+                    <div class="candidates-grid">
+                        ${(stats.candidates || []).map(candidate => `
+                            <div class="candidate-result">
+                                <div class="candidate-number">${candidate.number || '?'}</div>
+                                <div class="candidate-info">
+                                    <h4>${candidate.name || 'Kandidat'}</h4>
+                                    <p class="candidate-votes">
+                                        <i class="fas fa-vote-yea"></i> ${candidate.votes || 0} suara (${candidate.percentage || 0}%)
+                                    </p>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${candidate.percentage || 0}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <h2><i class="fas fa-bolt"></i> Aksi Cepat</h2>
+                    <div class="actions-grid">
+                        <button class="action-btn" onclick="resetVoting()">
+                            <i class="fas fa-redo"></i>
+                            <span>Reset Voting</span>
+                        </button>
+                        <button class="action-btn" onclick="exportData()">
+                            <i class="fas fa-file-export"></i>
+                            <span>Ekspor Data</span>
+                        </button>
+                        <button class="action-btn" onclick="refreshDashboard()">
+                            <i class="fas fa-sync"></i>
+                            <span>Refresh</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; font-size: 12px; color: #888;">
+                    Terakhir diperbarui: ${new Date().toLocaleTimeString()}
+                </div>
+            `;
+            
+            document.getElementById('dashboardContent').innerHTML = content;
+        }
+
+        // Load data dari Supabase
+        async function loadDashboardContent() {
+            console.log('Loading dashboard content...');
+            try {
+                if (!window.db || !window.db.getElectionStats) {
+                    throw new Error('Database belum siap');
+                }
+                
+                const stats = await window.db.getElectionStats();
+                renderDashboard(stats);
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                document.getElementById('dashboardContent').innerHTML = `
+                    <div class="error-box">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Gagal Memuat Data</h3>
+                        <p>Error: ${error.message}</p>
+                        <button onclick="refreshDashboard()" class="btn-retry" style="margin-top: 10px;">
+                            <i class="fas fa-redo"></i> Coba Lagi
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // Fungsi Aksi
+         async function resetVoting() {
+            if (confirm('⚠️ Apakah Anda yakin ingin mereset semua suara? Tindakan ini tidak dapat dibatalkan.')) {
+                try {
+                    const result = await window.db.resetAllVotes();
+                    if (result.success) {
+                        alert('✅ Voting berhasil direset!');
+                        refreshDashboard();
+                    } else {
+                        alert('❌ Gagal mereset: ' + result.error);
+                    }
+                } catch (error) {
+                    alert('❌ Gagal mereset: ' + error.message);
+                }
+            }
+        }
+
+        async function exportData() {
+            alert('Fitur ekspor sedang disiapkan. Silakan cek data di Supabase Table Editor.');
+        }
+
+        function refreshDashboard() {
+            loadDashboardContent();
+        }
+
+        // Logout
+        function doLogout() {
+            sessionStorage.clear();
+            window.location.href = 'admin-login.html';
+        }
+
+        // Inisialisasi saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!checkAdminSession()) return;
+            
+            setAdminInfo();
+            loadDashboardContent();
+            
+            // Auto-refresh setiap 10 detik untuk melihat perubahan suara secara real-time
+            setInterval(loadDashboardContent, 10000);
+            
+            // Tombol logout
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    if (confirm('Apakah Anda yakin ingin logout?')) {
+                        doLogout();
+                    }
+                });
+            }
+        });
+        </script>
+
+</body>
+</html>

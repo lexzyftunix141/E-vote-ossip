@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pemilu OSSIP</title>
+    <link rel="icon" type="image/png" href="assets/ossip-bg.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="main-header">
+    <div class="container">
+        <div class="logo-container">
+            <img src="assets/logo-ossip.png" data-src="assets/logo-ossip.png" loading="lazy" alt="LOGO OSSIP" class="logo">
+            <div class="logo-text">
+                <h1>PEMILU</h1>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="active"><i class="fas fa-home"></i> Beranda</a></li>
+                <li><a href="#about"><i class="fas fa-info-circle"></i> Tentang</a></li>
+                <li><a href="#candidates"><i class="fas fa-users"></i> Kandidat</a></li>
+                <li><a href="#timeline"><i class="fas fa-calendar-alt"></i> Timeline</a></li>
+            </ul>
+            
+            <!-- Pindahkan button toggle di sini, di luar ul -->
+            <button class="menu-toggle" id="menuToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </nav>
+    </div>
+</header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2 class="hero-title">PEMILU OSSIP 2027-2028</h2>
+                    <h1 class="hero-subtitle">Suara Anda Menentukan Masa Depan</h1>
+                    <p class="hero-description">
+                        Ikut berpartisipasi dalam pemilihan ketua dan wakil ketua OSSIP periode 2027-2028. 
+                        Pilih pemimpin yang mampu membawa perubahan positif untuk sekolah kita.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="login.html" class="btn-primary">VOTE SEKARANG <i class="fas fa-vote-yea"></i></a>
+                        <a href="#candidates" class="btn-secondary">LIHAT KANDIDAT <i class="fas fa-chevron-down"></i></a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="assets/BG-SEKOLAH.png"  alt="Pemilu OSSIP 2027-2028" class="gambar-sekolah">
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Kandidat Section -->
+    <section class="section-kandidat" id="candidates">
+        <div class="container">
+            <div class="kandidat-header-section">
+                <h2>Kandidat Ketua OSSIP 2027-2028</h2>
+                <p>Kenali para calon pemimpin yang akan membawa perubahan positif untuk sekolah kita. Pilih yang terbaik untuk masa depan OSSIP.</p>
+            </div>
+            
+            <!-- ================= KANDIDAT PUTRA ================= -->
+            <h3 class="sub-judul-kandidat">Kandidat Putra</h3>
+            <div class="kandidat-grid">
+                <!-- Kandidat 1 (Putra) -->
+                <div class="kandidat-item">
+                    <div class="kandidat-card-header">
+                        <img src="assets/banner1.png" alt="header">
+                        <div class="kandidat-avatar"> <img src="assets/kandidat1.png" alt=""></div>
+                    </div>
+                    <div class="kandidat-card-body">
+                        <h3 class="kandidat-name">WALDAN FAIQ SETIAWAN</h3>
+                        <div class="kandidat-info">
+                            <span><i class="fas fa-user-graduate"></i> Kelas XI-B</span>
+                        </div>
+                        <div class="kandidat-visi-section">
+                            <h4><i class="fas fa-eye"></i> Visi</h4>
+                            <p class="kandidat-visi-text">
+menjadikan <b>OSSIP</b> sebagai wadah untuk mewujudkan santri yang disiplin, berakhlak, bertanggung jawab, berprestasi, serta menjunjung tinggi nilai-nilai keislaman dalam kehidupan sehari-hari baik di pesantren maupun masyarakat. 
+</p>
+                        </div> 
+                        <div class="kandidat-misi-section">
+                            <h4><i class="fas fa-bullseye"></i> Misi</h4>
+                            <ul class="kandidat-misi-list">
+                                <li>menumbuhkan sikap akhlak yang baik dalam menghargai waktu dan mematuhi peraturan yang berlaku di dalam lingkungan pondok </li>
+                                <li>membangun kedisiplinan diri dengan selalu mengikuti kegiatan yang telah ditetapkan pondok </li>
+                                <li>menanamkan rasa tanggung jawab dengan menyelesaikan tanggung jawab dengan sungguh-sungguh dan benar, menjaga fasilitas pondok dan hak orang lain</li>
+                                <li>membentuk jiwa kepemimpinan sebagai OSSIP, menjadi teladan yang baik bagi sesama, dan memimpin dengan adil, bijak, dan penuh tanggung </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kandidat 2 (Putra) -->
+                <div class="kandidat-item">
+                    <div class="kandidat-card-header">
+                        <div class="kandidat-avatar"> <img src="assets/kandidat2.png" alt=""></div>
+                        <img src="assets/banner2.png" alt="header">
+                    </div>
+                    <div class="kandidat-card-body">
+                        <h3 class="kandidat-name">ACHMAD NAUFAL
+MIMBAR</h3>
+                        <div class="kandidat-info">
+                            <span><i class="fas fa-user-graduate"></i> Kelas XI-B</span>
+                        </div>
+                        <div class="kandidat-visi-section">
+                            <h4><i class="fas fa-eye"></i> Visi</h4>
+                            <p class="kandidat-visi-text">menjadikan <b>OSSIP</b> sebagai jalan untuk membentuk santri yang berakhlak mulia, disiplin, berprestasi, dan berkembang secara seimbang, baik di bidang akademik maupun non-akademik agar menjadi generasi yang bermanfaat dan membanggakan.</p>
+                        </div>
+                        <div class="kandidat-misi-section">
+                            <h4><i class="fas fa-bullseye"></i> Misi</h4>
+                            <ul class="kandidat-misi-list">
+                                <li>meningkatkan akhlak mulia, mengutamakan budaya sopan santun, saling menghormati antar santri maupun kepada guru dan staf </li>
+                                <li>membentuk santri yang disiplin, menegakkan aturan pondok dengan kesadaran diri, bukan karena takut hukuman </li>
+                                <li>mengembangkan bakat akademik & non-akademik, memberikan kesempatan yang merata untuk setiap santri agar tampil berkreasi dan berkompetisi di berbagai bidang </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kandidat 3 (Putra) -->  
+                <div class="kandidat-item">
+                    <div class="kandidat-card-header">
+                        <div class="kandidat-avatar"> <img src="assets/kandidat3.png" alt=""></div>
+                        <img src="assets/banner3.png" alt="">
+                    </div>
+                    <div class="kandidat-card-body">
+                        <h3 class="kandidat-name">DZAKII
+NUGRAHA</h3>
+                        <div class="kandidat-info">
+                            <span><i class="fas fa-user-graduate"></i> Kelas XI-B</span>
+                        </div>
+                        <div class="kandidat-visi-section">
+                            <h4><i class="fas fa-eye"></i> Visi</h4>
+                            <p class="kandidat-visi-text">membangun generasi santri Insan Pratama yang mandiri, berakhlak mulia dan berprestasi melalui kepemimpinan yang merangkul keteladanan yang nyata, serta disiplin bersih berbasis kesadaran.</p>
+                        </div>
+                        <div class="kandidat-misi-section">
+                            <h4><i class="fas fa-bullseye"></i> Misi</h4>
+                            <ul class="kandidat-misi-list">
+                                <li>menjadikan OSSIP sebagai uswah hasanah dalam menjalankan sunnah pondok dan adab kepada kiai serta dewan asatidz</li>
+                                <li>menanamkan jiwa kemandirian dan kesederhanaan dalam setiap aktivitas harian di asrama maupun kelas</li>
+                                <li>mempererat ukhuwah antar angkatan serta menghapus sekat senioritas negatif melalui pendekatan kekeluargaan yang santun</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- TUTUP GRID PUTRA -->
+
+
+            <!-- ================= KANDIDAT PUTRI ================= -->
+            <h3 class="sub-judul-kandidat" style="margin-top: 80px;">Kandidat Putri</h3>
+            <div class="kandidat-grid">
+                <!-- Kandidat 1 (Putri) -->
+                <div class="kandidat-item">
+                    <div class="kandidat-card-header">
+                        <img src="assets/bannerp1.png" alt="header">
+                        <div class="kandidat-avatar"> <img src="assets/kandidatp1.png" alt=""></div>
+                    </div>
+                    <div class="kandidat-card-body">
+                        <h3 class="kandidat-name">NAIRA ALIYA FAYYAZA</h3>
+                        <div class="kandidat-info">
+                            <span><i class="fas fa-user-graduate"></i> Kelas XI-A</span>
+                        </div>
+                        <div class="kandidat-visi-section">
+                            <h4><i class="fas fa-eye"></i> Visi</h4>
+                            <p class="kandidat-visi-text">Menjadikan ossip sebagai wadah untuk membangun ekosistem organisasi santri yang berintegrasi menegakan disiplin berbasis kesadaran diri, visioner dalam berkreativitas dan aktif membangun bakat sebagai bekal pemimpin masa depan.</p>
+                        </div> 
+                        <div class="kandidat-misi-section">
+                            <h4><i class="fas fa-bullseye"></i> Misi</h4>
+                            <ul class="kandidat-misi-list">
+                                <li>Membiasakan budaya disiplin berbasis kesadaran diri (self dicipline) dengan menggeser paradigma disiplin dari sekedar “takut hukuman” menjadi “kebutuhan pribadi” dalam upaya menjaga kualitas hafalan dan waktu belajar serta menciptakan suasana asrama yang humanis.</li>
+                                <li>Mengembangkan kreativitas santri yang adaptif dan solusif dengan memercayakan event tahunan berskala besar yang di kelola secara profesional oleh santri untuk melatih jiwa event organizer & problem solving yang akan membentuk santri untuk berani ambil langkah nyata kepada masyarakat.</li>
+                                <li>Mengelola kebersihan lingkungan dengan baik, melalui program LISA (LIhat Sampah Ambil) serta melanjutkan program Eco- Clean/ Bank Sampah dalam upaya menjaga lingkungan & keseimbangan antar makhluk hidup.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kandidat 2 (Putri) -->
+                <div class="kandidat-item">
+                    <div class="kandidat-card-header">
+                        <div class="kandidat-avatar"> <img src="assets/kandidatp2.png" alt=""></div>
+                        <img src="assets/bannerp2.png" alt="header">
+                    </div>
+                    <div class="kandidat-card-body">
+                        <h3 class="kandidat-name">RAHMA MAULIZA AZANI</h3>
+                        <div class="kandidat-info">
+                            <span><i class="fas fa-user-graduate"></i> Kelas XI-A</span>
+                        </div>
+                        <div class="kandidat-visi-section">
+                            <h4><i class="fas fa-eye"></i> Visi</h4>
+                            <p class="kandidat-visi-text">Mewujudkan organisasi kepemimpinan yang progresif & inklusif sebagai episentrun aspirasi, akselelator potensi bahasa, motor penggerak kepedulian sosial, guna membangun lingkungan pesantren yang disiplin dan unggul berlandaskan etika mengayomi, solidaritas, dan berdasarkan pada keimanan dan taqwa.</p>
+                        </div>
+                        <div class="kandidat-misi-section">
+                            <h4><i class="fas fa-bullseye"></i> Misi</h4>
+                            <ul class="kandidat-misi-list">
+                                <li>Mewujudkan ossip sebagai titik pusat agen perubahan sosial yang peduli terhadap kebersihan lingkungan dan peduli terhadap sesama berlandaskan pada pondasi iman & taqwa.</li>
+                                <li>Mewujudkan ossip sebagai laboratorium kepemimpinan yang progresif & inklusif guna mencetak siswa yang berkarakter kuat dan adaptif terhadap perkembangan teknologi dan zaman.
+</li>
+                                <li>“Membangun rumah tanpa sekat” mewujudkan ruang aspirasi, dimana setiap suara berharga dan tanpa adanya batas kaku perbedaan tingkatan kelas, sehingga setiap suara didengar dan dihargai.
+</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kandidat 3 (Putri) -->
+                <div class="kandidat-item">
+                    <div class="kandidat-card-header">
+                        <div class="kandidat-avatar"> <img src="assets/kandidatp3.png" alt=""></div>
+                        <img src="assets/bannerp3.png" alt="">
+                    </div>
+                    <div class="kandidat-card-body">
+                        <h3 class="kandidat-name">AZHARINA NURHIDAYAH</h3>
+                        <div class="kandidat-info">
+                            <span><i class="fas fa-user-graduate"></i> Kelas XI-A</span>
+                        </div>
+                        <div class="kandidat-visi-section">
+                            <h4><i class="fas fa-eye"></i> Visi</h4>
+                            <p class="kandidat-visi-text">Mewujudkan lingkungan yang harmonis, disiplin, peduli sesama, dan berakhlak mulia melalui orgasisasi siswa yang solid serta aspiratif.</p>
+                        </div>
+                        <div class="kandidat-misi-section">
+                            <h4><i class="fas fa-bullseye"></i> Misi</h4>
+                            <ul class="kandidat-misi-list">
+                                <li>Menumbuhkan rasa solidaritas dan kekeluargaan antar santri melalui kegiatan kolaboratif lintas angkatan dan ekstrakulikuler.
+</li>
+                                <li>Meningkatkan kedisiplinan dan kepedulian terhadap lingkungan melalui program kebersihan dan ketertiban bersama.</li>
+                                <li>Menyediakan ruang aspirasi/kotak saran yang terbuka untuk menampung keluhan maupun ide kreatif dari seluruh santri. </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- TUTUP GRID PUTRI -->
+
+            <!-- Tombol Pilih Kandidat -->
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="login.html" class="btn-pilih-kandidat">
+                    <i class="fas fa-user-check"></i> Pilih Kandidat
+                </a>
+                <p class="kandidat-note">*Untuk memilih kandidat, silakan masuk ke halaman login siswa terlebih dahulu</p>
+            </div>
+
+        </div>
+    </section>
+    
+    <!-- Countdown Timer -->
+    <section class="countdown">
+        <div class="container">
+            <h2>Pemilihan Akan Ditutup Dalam:</h2>
+            <div class="countdown-timer">
+                <div class="time-box">
+                    <span id="days">00</span>
+                    <p>Hari</p>
+                </div>
+                <div class="time-box">
+                    <span id="hours">00</span>
+                    <p>Jam</p>
+                </div>
+                <div class="time-box">
+                    <span id="minutes">00</span>
+                    <p>Menit</p>
+                </div>
+                <div class="time-box">
+                    <span id="seconds">00</span>
+                    <p>Detik</p>
+                </div>
+            </div>
+            <p class="countdown-info">Pemilihan dibuka:  14 November 2026 | Ditutup: 15 November 2026</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">Tentang Pemilu OSSIP</h2>
+            <div class="about-content">
+                <div class="about-card">
+                    <div class="about-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Demokrasi Siswa</h3>
+                    <p>Pemilu OSSIP merupakan wujud demokrasi di lingkungan sekolah, di mana setiap siswa berhak memilih pemimpinnya.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">
+                        <i class="fas fa-hand-paper"></i>
+                    </div>
+                    <h3>Suara Berharga</h3>
+                    <p>Setiap suara memiliki nilai yang sama dan sangat berarti dalam menentukan arah organisasi siswa sekolah.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3>Pemimpin Terpilih</h3>
+                    <p>Kandidat terpilih akan menjadi representasi siswa dalam menjembatani aspirasi kepada pihak sekolah.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline with Line Section -->
+    <section class="timeline-line-section" id="timeline">
+        <div class="container">
+            <div class="timeline-line-header">
+                <h2>Alur Voting OSSIP</h2>
+                <p>Ikuti 4 tahap sederhana untuk memberikan suara Anda dalam pemilihan ketua OSSIP 2027-2028. Setiap tahap dihubungkan dengan garis untuk menunjukkan alur proses.</p>
+            </div>
+            
+            <div class="timeline-line-container">
+                <!-- Garis utama timeline -->
+                <div class="timeline-main-line"></div>
+                
+                <div class="timeline-line-items">
+                    <!-- Tahap 1: Registrasi -->
+                    <div class="timeline-line-item">
+                        <div class="timeline-circle">
+                            <i class="fas fa-user-plus"></i>
+                            <div class="timeline-number-badge">1</div>
+                        </div>
+                        <div class="timeline-content-box">
+                            <h3>Registration</h3>
+                            <div class="timeline-content-date">TAHAP AWAL</div>
+                            <p>
+                                Login menggunakan username. Sistem akan memverifikasi status Anda sebagai siswa aktif yang berhak memilih.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Garis penghubung antara item 1 dan 2 -->
+                    <div class="timeline-connector" style="width: 23%; left: 22%;"></div>
+                    
+                    <!-- Tahap 2: Verifikasi -->
+                    <div class="timeline-line-item">
+                        <div class="timeline-circle">
+                            <i class="fas fa-id-card-alt"></i>
+                            <div class="timeline-number-badge">2</div>
+                        </div>
+                        <div class="timeline-content-box">
+                            <h3>Verification</h3>
+                            <div class="timeline-content-date">TAHAP VERIFIKASI</div>
+                            <p>
+                                Sistem memvalidasi identitas Anda dan memastikan belum melakukan voting sebelumnya. Data Anda dijaga kerahasiaannya.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Garis penghubung antara item 2 dan 3 -->
+                    <div class="timeline-connector" style="width: 23%; left: 47%;"></div>
+                    
+                    <!-- Tahap 3: Pencoblosan -->
+                    <div class="timeline-line-item">
+                        <div class="timeline-circle">
+                            <i class="fas fa-vote-yea"></i>
+                            <div class="timeline-number-badge">3</div>
+                        </div>
+                        <div class="timeline-content-box">
+                            <h3>Voting</h3>
+                            <div class="timeline-content-date">INTI PROSES</div>
+                            <p>
+                                Pilih kandidat ketua OSSIP sesuai pilihan hati. Voting bersifat rahasia dan tidak dapat dilacak ke pemilih.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Garis penghubung antara item 3 dan 4 -->
+                    <div class="timeline-connector" style="width: 23%; left: 72%;"></div>
+                    
+                    <!-- Tahap 4: Konfirmasi -->
+                    <div class="timeline-line-item">
+                        <div class="timeline-circle">
+                            <i class="fas fa-fingerprint"></i>
+                            <div class="timeline-number-badge">4</div>
+                        </div>
+                        <div class="timeline-content-box">
+                            <h3>Confirmation</h3>
+                            <div class="timeline-content-date">TAHAP AKHIR</div>
+                            <p>
+                                Tahap terakhir dari semua proses yaitu, konfirmasi yang bertujuan untuk menunjukkan bahwa anda telah voting dengan cara cap jari
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="assets/logo-sekolah.png" alt="Logo Sekolah" class="ipe2">
+                    <h3>INSAN PRATAMA</h3>
+                    <p>Pemilu OSSIP 2027-2028</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="login.html">Login Siswa</a></li>
+                        <li><a href="admin-login.html">Login Admin</a></li>
+                        <li><a href="#candidates">Kandidat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Kontak</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Raya Parahu No.7, Parahu, Kec. Sukamulya, Tangerang, Banten 15610</p>
+                    <p><i class="fas fa-phone"></i> 0821-1442-4510</p>
+                    <p><i class="fas fa-envelope"></i> pesantren-insan-pratama.sch.id</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Pemilu OSSIP | INSAN PRATAMA. Semua Hak Dilindungi. | Dikembangkan oleh Tim IT OSSIP</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Tambahkan ini sebelum script.js -->
+<script src="script.js"></script>
+
+</body>
+</html>

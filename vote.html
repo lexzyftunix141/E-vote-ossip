@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VOTE PAGE</title>
+    <link rel="icon" type="image/png" href="assets/ossip-bg.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Gunakan CSS yang sama persis seperti yang Anda miliki sebelumnya */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%); min-height: 100vh; color: #333; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        .vote-header { background: linear-gradient(135deg, #1a237e 0%, #283593 100%); color: white; padding: 15px 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .vote-header-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .vote-logo { display: flex; align-items: center; gap: 15px; }
+        .vote-logo img { height: 50px; filter: brightness(0) invert(1); }
+        .vote-logo h1 { font-size: 22px; font-weight: 700; }
+        .vote-logo p { font-size: 13px; opacity: 0.9; margin-top: 3px; }
+        .vote-user-info { background: rgba(255, 255, 255, 0.15); padding: 12px 20px; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; min-width: 300px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .user-info { display: flex; align-items: center; gap: 12px; }
+        .user-info i { font-size: 28px; color: rgba(255, 255, 255, 0.95); }
+        .user-details { display: flex; flex-direction: column; }
+        #currentUser { font-weight: 600; font-size: 16px; }
+        #currentUserClass { font-size: 13px; opacity: 0.9; background: rgba(255, 255, 255, 0.2); padding: 3px 10px; border-radius: 20px; margin-top: 4px; display: inline-block; }
+        .btn-logout { background: rgba(255, 255, 255, 0.2); border: none; color: white; padding: 8px 16px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; font-size: 13px; font-weight: 500; position: relative; top: 12px; left: 8px; }
+        .btn-logout:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+
+        /* Main Content */
+        .vote-main { padding: 30px 0; }
+        .vote-instructions { background: white; border-radius: 12px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); border-left: 5px solid #3498db; }
+        .instruction-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .instruction-header i { color: #3498db; font-size: 24px; }
+        .instruction-header h2 { color: #2c3e50; font-size: 22px; }
+        .instruction-steps { padding-left: 25px; margin-bottom: 20px; }
+        .instruction-steps li { margin-bottom: 10px; line-height: 1.6; }
+        .warning-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 15px; border-radius: 6px; display: flex; align-items: flex-start; gap: 12px; }
+        .warning-box i { color: #ff9800; font-size: 20px; margin-top: 2px; }
+        .warning-box p { color: #5d4037; font-size: 15px; }
+
+        /* Grid */
+        .vote-candidates { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); }
+        .vote-title { text-align: center; color: #2c3e50; font-size: 28px; margin-bottom: 10px; }
+        .vote-subtitle { text-align: center; color: #7f8c8d; margin-bottom: 30px; font-size: 16px; }
+        .vote-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 30px; align-items: stretch; }
+
+        /* Card */
+        .vote-card { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); transition: all 0.3s ease; border: 2px solid transparent; position: relative; overflow: hidden; display: flex; flex-direction: column; height: 100%; }
+        .vote-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); border-color: #3498db; }
+        .card-badge { position: absolute; top: 15px; right: 15px; background: linear-gradient(135deg, #3498db, #2c3e50); color: white; padding: 5px 15px; border-radius: 20px; font-size: 13px; font-weight: 600; letter-spacing: 1px; }
+        .card-avatar { text-align: center; margin-bottom: 20px; }
+        .card-avatar img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 5px solid #f1f8ff; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
+        .avatar-label { display: block; margin-top: 8px; color: #7f8c8d; font-size: 14px; font-weight: 500; }
+        .candidate-name { text-align: center; color: #2c3e50; font-size: 20px; margin-bottom: 15px; font-weight: 600; }
+        .tags-container { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
+        .tag { background: #e3f2fd; color: #1976d2; padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+        .info-box { background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .info-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+        .info-row:last-child { margin-bottom: 0; }
+        .info-icon { color: #3498db; width: 20px; }
+        .info-text { color: #555; font-size: 15px; }
+        .vision-box { background: linear-gradient(135deg, #f8f9fa, #e9ecef); padding: 18px; border-radius: 10px; margin-bottom: 25px; border-left: 4px solid #3498db; flex: 1; }
+        .vision-title { display: flex; align-items: center; gap: 10px; color: #2c3e50; font-size: 16px; margin-bottom: 20px; }
+        .vision-title i { color: #3498db; }
+        .vision-text { color: #555; line-height: 1.6; font-size: 14px; }
+
+        /* Button */
+        .vote-btn { width: 100%; background: linear-gradient(135deg, #1c2cd4 100%); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s ease; margin-top: auto; }
+        .vote-btn:hover { background: linear-gradient(135deg, #0F1559 100%); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3); }
+
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: white; border-radius: 15px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; animation: modalSlideIn 0.3s ease; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); }
+        @keyframes modalSlideIn { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid #eee; background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%); color: white; border-radius: 15px 15px 0 0; }
+        .modal-header h2 { margin: 0; display: flex; align-items: center; gap: 10px; font-size: 1.3em; }
+        .modal-close { background: none; border: none; color: white; font-size: 28px; cursor: pointer; padding: 0; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.3s; }
+        .modal-close:hover { background: rgba(255, 255, 255, 0.2); }
+        .modal-body { padding: 25px; }
+        .modal-footer { padding: 20px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; gap: 15px; }
+        .voter-details-confirm { background: #f8f9fa; padding: 18px; border-radius: 10px; margin-bottom: 25px; border-left: 4px solid #3498db; }
+        .voter-details-confirm h4 { margin: 0 0 15px 0; color: #2c3e50; display: flex; align-items: center; gap: 10px; font-size: 1.1em; }
+        .voter-details-confirm p { margin: 10px 0; display: flex; align-items: center; gap: 12px; color: #555; }
+        .voter-details-confirm i { color: #3498db; width: 20px; text-align: center; }
+        .selected-candidate { background: linear-gradient(135deg, #e3f2fd, #f3e5f5); padding: 20px; border-radius: 10px; border: 2px solid #bbdefb; margin: 20px 0; }
+        .selected-candidate h4 { color: #2c3e50; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .selected-candidate p { margin: 10px 0; display: flex; align-items: center; gap: 10px; color: #555; }
+        .selected-candidate i { color: #3498db; width: 20px; }
+        .confirmation-warning { background: #fff8e1; border-left: 4px solid #ffc107; padding: 18px; border-radius: 10px; margin-top: 20px; display: flex; align-items: flex-start; gap: 12px; }
+        .confirmation-warning i { color: #ff9800; font-size: 20px; margin-top: 2px; }
+        .confirmation-warning p { color: #5d4037; line-height: 1.6; }
+        .success-modal { text-align: center; padding: 30px; }
+        .modal-icon { font-size: 70px; color: #27ae60; margin-bottom: 25px; animation: scaleIn 0.5s ease; }
+        @keyframes scaleIn { from { transform: scale(0); } to { transform: scale(1); } }
+        .success-modal h2 { color: #2c3e50; margin-bottom: 15px; font-size: 24px; }
+        .success-modal > p { color: #7f8c8d; line-height: 1.7; margin-bottom: 25px; }
+        .success-details { text-align: left; margin: 25px 0; background: #f8f9fa; padding: 20px; border-radius: 10px; }
+        .success-details p { margin: 12px 0; display: flex; align-items: center; gap: 12px; padding: 12px; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); }
+        .success-details i { color: #27ae60; width: 20px; }
+        .btn-cancel, .btn-confirm, .btn-finish { padding: 14px 28px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 10px; min-width: 140px; font-size: 15px; }
+        .btn-cancel { background: #e74c3c; color: white; }
+        .btn-cancel:hover { background: #c0392b; }
+        .btn-confirm { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; }
+        .btn-confirm:hover { background: linear-gradient(135deg, #2980b9 0%, #1f639c 100%); }
+        .btn-finish { background: linear-gradient(135deg, #27ae60 0%, #219653 100%); color: white; min-width: 200px; margin: 20px auto 0; }
+        .btn-finish:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3); }
+        .vote-footer { background: #2c3e50; color: white; text-align: center; padding: 20px 0; margin-top: 40px; }
+        .vote-footer p { margin: 8px 0; font-size: 14px; opacity: 0.9; }
+        .vote-footer i { color: #3498db; margin-right: 8px; }
+        @media (max-width: 768px) {
+            .vote-header-content { flex-direction: column; text-align: center; }
+            .vote-user-info { flex-direction: column; gap: 15px; min-width: auto; width: 100%; }
+            .vote-grid { grid-template-columns: 1fr; }
+            .modal-footer { flex-direction: column; }
+            .btn-cancel, .btn-confirm { width: 100%; }
+        }
+    </style>
+</head>
+<body class="vote-page">
+    <header class="vote-header">
+        <div class="container">
+            <div class="vote-header-content">
+                <div class="vote-logo">
+                    <div class="logo-container">
+                        <img src="assets/logo-ossip.png" alt="Logo OSSIP" class="logo-image" onerror="this.classList.add('error');">
+                    </div>
+                    <div>
+                        <h1>PEMILIHAN OSSIP</h1>
+                        <p>2026-2027 | INSAN PRATAMA</p>
+                    </div>
+                </div>
+                <div class="vote-user-info">
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        <div class="user-details">
+                            <span id="currentUser">Memuat data...</span>
+                            <span id="currentUserClass" class="user-class"></span>
+                        </div>
+                    </div>
+                    <button class="btn-logout" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Keluar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="vote-main">
+        <div class="container">
+            <div class="vote-instructions">
+                <div class="instruction-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h2>Panduan Pemilihan</h2>
+                </div>
+                <ol class="instruction-steps" id="instructionSteps">
+                    <!-- Akan diisi dinamis oleh JS -->
+                </ol>
+                <div class="warning-box">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p id="warningText">Anda hanya dapat memilih <strong>satu kali</strong>. Pastikan pilihan Anda sudah tepat sebelum mengkonfirmasi.</p>
+                </div>
+            </div>
+            
+            <div class="vote-candidates">
+                <h2 class="vote-title" id="voteTitle">PILIH CALON KETUA OSSIP</h2>
+                <p class="vote-subtitle" id="voteSubtitle">Klik pada kartu kandidat untuk melihat detail visi dan misi</p>
+                
+                <!-- Grid untuk Kandidat -->
+                <div class="vote-grid" id="candidatesGrid"></div>
+            </div>
+            
+            <!-- Konfirmasi Modal -->
+            <div class="modal-overlay" id="confirmModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2><i class="fas fa-exclamation-circle"></i> Konfirmasi Pilihan Anda</h2>
+                        <button class="modal-close" id="closeModal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="voter-details-confirm">
+                            <h4><i class="fas fa-user-check"></i> Data Pemilih</h4>
+                            <p><i class="fas fa-user"></i> <strong>Nama:</strong> <span id="voterNameConfirm">-</span></p>
+                            <p><i class="fas fa-id-card"></i> <strong>Username:</strong> <span id="voterUsernameConfirm">-</span></p>
+                            <p><i class="fas fa-graduation-cap"></i> <strong>Kelas:</strong> <span id="voterClassConfirm">-</span></p>
+                        </div>
+                        <div class="confirmation-details">
+                            <div class="selected-candidate" id="selectedCandidateInfo"></div>
+                            <div class="confirmation-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <p>Anda akan memilih <strong id="selectedCandidateName">-</strong>. Setelah dikonfirmasi, pilihan <strong>tidak dapat diubah</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-cancel" id="cancelVote"><i class="fas fa-times"></i> Batal</button>
+                        <button class="btn-confirm" id="confirmVote"><i class="fas fa-check"></i> YA, KONFIRMASI</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Success Modal -->
+            <div class="modal-overlay" id="successModal">
+                <div class="modal-content success-modal">
+                    <div class="modal-icon"><i class="fas fa-check-circle"></i></div>
+                    <h2>SUARA ANDA TELAH TERKIRIM!</h2>
+                    <p>Terima kasih telah berpartisipasi dalam Pemilu OSSIP 2026-2027.</p>
+                    <div class="success-details">
+                        <p><i class="fas fa-user"></i> <strong>Nama:</strong> <span id="voterNameSuccess">-</span></p>
+                        <p><i class="fas fa-vote-yea"></i> <strong>Pilihan:</strong> <span id="voteChoiceSuccess">-</span></p>
+                    </div>
+                    <button class="btn-finish" id="finishBtn"><i class="fas fa-home"></i> KEMBALI KE BERANDA</button>
+                </div>
+            </div>
+
+            <!-- Already Voted Modal -->
+            <div class="modal-overlay" id="alreadyVotedModal">
+                <div class="modal-content success-modal">
+                    <div class="modal-icon" style="color: #e74c3c;"><i class="fas fa-exclamation-circle"></i></div>
+                    <h2 style="color: #e74c3c;">ANDA SUDAH MEMILIH!</h2>
+                    <p>Anda sudah melakukan voting sebelumnya.</p>
+                    <div class="success-details">
+                        <p><i class="fas fa-user"></i> <strong>Nama:</strong> <span id="voterNameAlready">-</span></p>
+                        <p><i class="fas fa-info-circle"></i> <strong>Status:</strong> Sudah melakukan voting</p>
+                    </div>
+                    <button class="btn-finish" id="backToHomeBtn" style="background: #e74c3c;"><i class="fas fa-home"></i> KEMBALI KE BERANDA</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="vote-footer">
+        <div class="container">
+            <p><i class="fas fa-lock"></i> Sistem ini aman dan terenkripsi. Pilihan Anda bersifat rahasia.</p>
+            <p>Pemilu OSSIP 2026-2027 | INSAN PRATAMA</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="database.js"></script> 
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+        let currentVoter = null;
+        let allCandidates = [];
+        
+        // Variabel untuk menyimpan pilihan (diperbaiki)
+        let selectedMaleCandidate = null;
+        let selectedFemaleCandidate = null;
+        let selectedStudentCandidate = null; // Khusus siswa
+
+        function checkUserSession() {
+            const voterData = sessionStorage.getItem('currentVoter');
+            if (!voterData) {
+                alert('Anda belum login. Silakan login terlebih dahulu.');
+                window.location.href = 'login.html';
+                return false;
+            }
+            try {
+                currentVoter = JSON.parse(voterData);
+                if (currentVoter.has_voted) {
+                    showAlreadyVotedModal(currentVoter);
+                    return false;
+                }
+                return true;
+            } catch (error) {
+                window.location.href = 'login.html';
+                return false;
+            }
+        }
+        
+        function updateUserHeader() {
+            const userNameElement = document.getElementById('currentUser');
+            const userClassElement = document.getElementById('currentUserClass');
+            
+            if (userNameElement && currentVoter) {
+                const label = currentVoter.role === 'teacher' ? ' (Guru)' : '';
+                userNameElement.textContent = currentVoter.name + label;
+            }
+            if (userClassElement && currentVoter) {
+                userClassElement.textContent = currentVoter.class;
+            }
+        }
+
+        async function initializeApp() {
+            if (!checkUserSession()) return;
+            updateUserHeader();
+            
+            allCandidates = await window.db.getAllCandidates();
+            
+            if (currentVoter.role === 'teacher') {
+                setupTeacherFlow();
+            } else {
+                setupStudentFlow();
+            }
+        }
+
+        // ==========================================
+        // ALUR GURU (Pilih Putra, lalu Pilih Putri)
+        // ==========================================
+        function setupTeacherFlow() {
+            document.getElementById('instructionSteps').innerHTML = `
+                <li>Pilih <strong>satu kandidat putra</strong>, lalu klik "Selanjutnya".</li>
+                <li>Pilih <strong>satu kandidat putri</strong>, lalu klik "Pilih Kandidat".</li>
+                <li>Konfirmasi pilihan Anda.</li>
+            `;
+            
+            const maleCandidates = allCandidates.filter(c => c.gender === 'male');
+            const femaleCandidates = allCandidates.filter(c => c.gender === 'female');
+            
+            document.getElementById('voteTitle').textContent = "PILIH KANDIDAT PUTRA";
+            document.getElementById('voteSubtitle').textContent = "Pilih 1 kandidat, lalu klik Selanjutnya";
+            renderCandidatesForTeacher(maleCandidates, 'male');
+
+            // Tombol Selanjutnya
+            let nextBtn = document.getElementById('nextStepBtn');
+            if (!nextBtn) {
+                nextBtn = document.createElement('button');
+                nextBtn.id = 'nextStepBtn';
+                nextBtn.className = 'vote-btn';
+                nextBtn.style.marginTop = '30px';
+                nextBtn.innerHTML = 'SELANJUTNYA <i class="fas fa-arrow-right"></i>';
+                document.getElementById('candidatesGrid').parentElement.appendChild(nextBtn);
+            }
+            nextBtn.style.display = 'none';
+
+            nextBtn.addEventListener('click', () => {
+                document.getElementById('voteTitle').textContent = "PILIH KANDIDAT PUTRI";
+                document.getElementById('voteSubtitle').textContent = "Pilih 1 kandidat, lalu klik Pilih Kandidat";
+                renderCandidatesForTeacher(femaleCandidates, 'female');
+                nextBtn.style.display = 'none';
+            });
+        }
+
+        function renderCandidatesForTeacher(candidatesList, gender) {
+            const grid = document.getElementById('candidatesGrid');
+            grid.innerHTML = '';
+            candidatesList.forEach(candidate => {
+                const card = createCardHTML(candidate);
+                grid.appendChild(card);
+            });
+            setupTeacherVoteButtons(gender);
+        }
+
+        function setupTeacherVoteButtons(gender) {
+            const voteButtons = document.querySelectorAll('.vote-btn[data-candidate-id]');
+            voteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const candidateId = parseInt(this.getAttribute('data-candidate-id'));
+                    
+                    if (gender === 'male') {
+                        selectedMaleCandidate = candidateId;
+                        document.querySelectorAll('.vote-card').forEach(c => c.style.borderColor = 'transparent');
+                        this.closest('.vote-card').style.borderColor = '#3498db';
+                        document.getElementById('nextStepBtn').style.display = 'flex';
+                    } else {
+                        selectedFemaleCandidate = candidateId;
+                        document.querySelectorAll('.vote-card').forEach(c => c.style.borderColor = 'transparent');
+                        this.closest('.vote-card').style.borderColor = '#3498db';
+                        
+                        const maleCand = allCandidates.find(c => c.id === selectedMaleCandidate);
+                        const femaleCand = allCandidates.find(c => c.id === selectedFemaleCandidate);
+                        
+                        updateConfirmationModal(currentVoter, femaleCand, maleCand);
+                        document.getElementById('confirmModal').style.display = 'flex';
+                    }
+                });
+            });
+        }
+
+        // ==========================================
+        // ALUR SISWA (1 Tahap)
+        // ==========================================
+        function setupStudentFlow() {
+            const filteredCandidates = allCandidates.filter(c => c.gender === currentVoter.gender);
+            renderCandidatesForStudent(filteredCandidates);
+        }
+
+        function renderCandidatesForStudent(candidatesList) {
+            const grid = document.getElementById('candidatesGrid');
+            grid.innerHTML = '';
+            candidatesList.forEach(candidate => {
+                const card = createCardHTML(candidate);
+                grid.appendChild(card);
+            });
+            setupStudentVoteButtons();
+        }
+
+        function setupStudentVoteButtons() {
+            const voteButtons = document.querySelectorAll('.vote-btn[data-candidate-id]');
+            voteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    selectedStudentCandidate = parseInt(this.getAttribute('data-candidate-id'));
+                    const candidate = allCandidates.find(c => c.id === selectedStudentCandidate);
+                    
+                    updateConfirmationModal(currentVoter, candidate, null);
+                    document.getElementById('confirmModal').style.display = 'flex';
+                });
+            });
+        }
+
+        // ==========================================
+        // FUNGSI BANTUAN UMUM
+        // ==========================================
+        function createCardHTML(candidate) {
+            const div = document.createElement('div');
+            div.className = 'vote-card';
+            const imgSrc = candidate.image_chairman ? candidate.image_chairman : 'assets/ossip-bg.png'; 
+            div.innerHTML = `
+                <div class="card-badge">KANDIDAT ${candidate.number}</div>
+                <div class="card-avatar">
+                    <img src="${imgSrc}" alt="${candidate.chairman_name}">
+                    <span class="avatar-label">Ketua</span>
+                </div>
+                <h4 class="candidate-name">${candidate.chairman_name}</h4>
+                <div class="tags-container">${candidate.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
+                <div class="info-box">
+                    <div class="info-row"><i class="fas fa-graduation-cap info-icon"></i><span class="kelas-teks">${candidate.chairman_class}</span></div>
+                </div>
+                <div class="vision-box">
+                    <h4 class="vision-title"><i class="fas fa-bullseye"></i> Visi Utama</h4>
+                    <p class="vision-text">${candidate.vision}</p>
+                </div>
+                <button class="vote-btn" data-candidate-id="${candidate.id}">
+                    <i class="fas fa-check-circle"></i> PILIH KANDIDAT INI
+                </button>
+            `;
+            return div;
+        }
+
+        function updateConfirmationModal(voter, candidate1, candidate2) {
+            document.getElementById('voterNameConfirm').textContent = voter.name;
+            document.getElementById('voterUsernameConfirm').textContent = voter.username;
+            document.getElementById('voterClassConfirm').textContent = voter.class;
+            
+            let infoHTML = ``;
+            let selectedNameText = ``;
+            
+            if (voter.role === 'teacher') {
+                // Guru memilih dua kandidat
+                infoHTML = `
+                    <h4><i class="fas fa-user-tie"></i> Konfirmasi Pilihan</h4>
+                    <p><i class="fas fa-male"></i> <strong>Pilihan Putra:</strong> No. ${candidate2.number} - ${candidate2.chairman_name}</p>
+                    <p><i class="fas fa-female"></i> <strong>Pilihan Putri:</strong> No. ${candidate1.number} - ${candidate1.chairman_name}</p>
+                `;
+                selectedNameText = `Putra: ${candidate2.chairman_name}, Putri: ${candidate1.chairman_name}`;
+            } else {
+                // Siswa memilih satu kandidat
+                infoHTML = `
+                    <h4><i class="fas fa-user-tie"></i> Kandidat ${candidate1.number}: ${candidate1.chairman_name}</h4>
+                `;
+                selectedNameText = `Kandidat ${candidate1.number}: ${candidate1.chairman_name}`;
+            }
+            
+            document.getElementById('selectedCandidateName').textContent = selectedNameText;
+            document.getElementById('selectedCandidateInfo').innerHTML = infoHTML;
+        }
+
+        // ==========================================
+        // KONFIRMASI & SIMPAN VOTE
+        // ==========================================
+        document.getElementById('confirmVote').addEventListener('click', async function() {
+            const confirmBtn = this;
+            const originalText = confirmBtn.innerHTML;
+            confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MEMPROSES...';
+            confirmBtn.disabled = true;
+            document.getElementById('confirmModal').style.display = 'none';
+            
+            try {
+                if (currentVoter.role === 'teacher') {
+                    if (!selectedMaleCandidate || !selectedFemaleCandidate) throw new Error("Kandidat belum dipilih lengkap.");
+                    
+                    // Simpan suara Putra
+                    await window.db.castVote(currentVoter.id, selectedMaleCandidate);
+                    // Simpan suara Putri
+                    await window.db.castVote(currentVoter.id, selectedFemaleCandidate);
+                    
+                    // Update status voter
+                    await window.db.updateVoter(currentVoter.id, { has_voted: true, vote_time: new Date().toISOString() });
+                    
+                    currentVoter.has_voted = true;
+                    sessionStorage.setItem('currentVoter', JSON.stringify(currentVoter));
+                    
+                    document.getElementById('voteChoiceSuccess').textContent = `Putra & Putri`;
+                } else {
+                    if (!selectedStudentCandidate) throw new Error("Kandidat belum dipilih.");
+                    
+                    // Simpan suara Siswa
+                    await window.db.castVote(currentVoter.id, selectedStudentCandidate);
+                    
+                    // Update status voter
+                    await window.db.updateVoter(currentVoter.id, { has_voted: true, vote_time: new Date().toISOString() });
+                    
+                    currentVoter.has_voted = true;
+                    sessionStorage.setItem('currentVoter', JSON.stringify(currentVoter));
+                    
+                    const candidate = allCandidates.find(c => c.id === selectedStudentCandidate);
+                    document.getElementById('voteChoiceSuccess').textContent = `Kandidat ${candidate.number}: ${candidate.chairman_name}`;
+                }
+                
+                document.getElementById('voterNameSuccess').textContent = currentVoter.name;
+                document.getElementById('successModal').style.display = 'flex';
+                disableVoteButtons();
+                
+            } catch (error) {
+                console.error("Error voting:", error);
+                alert('Gagal menyimpan vote: ' + error.message);
+            } finally {
+                confirmBtn.innerHTML = originalText;
+                confirmBtn.disabled = false;
+            }
+        });
+
+        // --- Sisa fungsi modal, logout, dll ---
+        document.getElementById('closeModal')?.addEventListener('click', () => document.getElementById('confirmModal').style.display = 'none');
+        document.getElementById('cancelVote')?.addEventListener('click', () => document.getElementById('confirmModal').style.display = 'none');
+        document.getElementById('finishBtn').addEventListener('click', () => window.location.href = 'index.html');
+        document.getElementById('backToHomeBtn')?.addEventListener('click', () => window.location.href = 'index.html');
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            if(confirm('Keluar dari sistem?')) {
+                sessionStorage.removeItem('currentVoter');
+                window.location.href = 'login.html';
+            }
+        });
+
+        function showAlreadyVotedModal(voter) {
+            document.getElementById('alreadyVotedModal').style.display = 'flex';
+            document.getElementById('voterNameAlready').textContent = voter.name;
+        }
+
+        function disableVoteButtons() {
+            document.querySelectorAll('.vote-btn').forEach(btn => {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> SUDAH MEMILIH';
+                btn.style.background = '#95a5a6';
+            });
+        }
+
+        await initializeApp();
+    });
+    </script> 
+</body>
+</html>
